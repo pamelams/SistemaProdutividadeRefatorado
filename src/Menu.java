@@ -1,12 +1,6 @@
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Menu {
-    static private ArrayList<Collaborator> collaborators = new ArrayList<Collaborator>();
-    static private ArrayList<Project> projects = new ArrayList<Project>();
-    static private ArrayList<AcademicProduction> productions = new ArrayList<AcademicProduction>();
     static private Scanner read = new Scanner(System.in);
 
     public static void homePage(Laboratory lab) {

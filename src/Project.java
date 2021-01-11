@@ -14,8 +14,8 @@ public class Project {
     private ArrayList<Publication> publications;
     private int status; // 0 = em elaboracao; 1 = em andamento; 2 = concluido.
 
-    public Project(String title){
-        this.title = title;
+    public Project(){
+        this.title = null;
         this.startDate = null;
         this.endDate = null;
         this.fundingAgency = null;
@@ -94,26 +94,19 @@ public class Project {
     public ArrayList<Collaborator> getParticipants() {
         return participants;
     }
-    public void addParticipant(Student newParticipant) {
+    public void addParticipant(Collaborator newParticipant) {
         if(this.participants == null){
             this.participants = new ArrayList<Collaborator>();
         }
-        if(newParticipant.getType() == "Aluno de graduacao") {
-            if(newParticipant.getStatus() == 2) {
+        if(newParticipant.getClass().getSimpleName() == "Student") {
+            Student st = (Student) newParticipant;
+            if(st.getStatus() == 2) {
                 System.out.println("\nNao foi possivel adicionar " + newParticipant.getName() + " (Aluno de graduacao ja participa de dois projetos nao concluidos).");
                 return;
             }
         }
         this.participants.add(newParticipant);
         newParticipant.addHistory(this);
-        System.out.println("\n" + newParticipant.getName() + " foi adicionado!");
-    }
-    public void addParticipant(Collaborator newParticipant) {
-        newParticipant.addHistory(this);
-        if(this.participants == null){
-            this.participants = new ArrayList<Collaborator>();
-        }
-        this.participants.add(newParticipant);
         System.out.println("\n" + newParticipant.getName() + " foi adicionado!");
     }
     public void removeParticipant(String email) {
@@ -197,7 +190,7 @@ public class Project {
         else if(this.getStatus() == 1) {
             toPrint = toPrint + "\nStatus: Em andamento";
         }
-        else if(this.getStatus() == 0) {
+        else if(this.getStatus() == 2) {
             toPrint = toPrint + "\nStatus: Concluido";
         }
         toPrint = toPrint + "\nData de inicio: " + this.printStartDate();
