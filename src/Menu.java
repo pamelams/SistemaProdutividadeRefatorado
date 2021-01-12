@@ -13,10 +13,7 @@ public class Menu {
             System.out.println("(1) Entrar como administrador                           ");
             System.out.println("(2) Entrar como colaborador                             ");
             System.out.println("--------------------------------------------------------");
-            do{
-                selec = read.nextInt();
-                read.nextLine();
-            } while(selec < 0 || selec > 2);
+            selec = readOption(0, 2);
             if(selec == 0){
                 return;
             }
@@ -29,7 +26,7 @@ public class Menu {
         } while(selec != 0);
     }
     /* Menu dos colaboradores */
-    public static void menuCollaborator(Laboratory lab,Collaborator me) {
+    public static void collaboratorMenu(Laboratory lab,Collaborator me) {
         int selec;
         do {
             System.out.println("\n");
@@ -41,10 +38,7 @@ public class Menu {
             System.out.println("(3) Consultar por producao academica");
             System.out.println("(4) Ver minhas informacoes          ");
             System.out.println("------------------------------------");
-            do{
-                selec = read.nextInt();
-                read.nextLine();
-            } while(selec < 0 || selec > 4);
+            selec = readOption(0, 4);
             if(selec == 0){
                 return;
             }
@@ -80,10 +74,7 @@ public class Menu {
             System.out.println("(8) Consultar por producao academica");
             System.out.println("(9) Gerar relatorio de produtividade");
             System.out.println("------------------------------------");
-            do{
-                selec = read.nextInt();
-                read.nextLine();
-            } while(selec < 0 || selec > 9);
+            selec = readOption(0, 9);
             if(selec == 0){
                 return;
             }
@@ -115,5 +106,30 @@ public class Menu {
                 lab.productionReport();
             }
         } while(selec != 0);
+    }
+    public static int readOption(int lower, int upper) {
+        int option;
+        boolean done;
+        do {
+            try {
+                System.out.print("\n> ");
+                option = read.nextInt();
+                if(option < lower || option > upper) {
+                    throw new InputOutOfBounder(lower, upper);
+                }
+                read.nextLine();
+                done = true;
+                return option;
+            } catch(InputOutOfBounder e) {
+                System.out.println(e + " Tente novamente: ");
+                read.nextLine();
+                done = false;
+            } catch(Exception e) {
+                System.out.println("\nEntrada invalida! Tente novamente: ");
+                read.nextLine();
+                done = false;
+            }
+        } while(!done);
+        return -1;
     }
 }

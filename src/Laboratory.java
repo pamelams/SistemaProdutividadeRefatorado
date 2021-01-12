@@ -9,7 +9,6 @@ public class Laboratory {
     private ArrayList<AcademicProduction> productions = new ArrayList<AcademicProduction>();
     private Scanner read = new Scanner(System.in);
 
-    // colocar alguns metodos de menu aqui
     public void admLogin() {
         String user, password;
         System.out.println("\n>Digite o nome de usuario: ");
@@ -35,7 +34,7 @@ public class Laboratory {
             System.out.println("\nEmail nao cadastrado!");
         }
         else if(person.getPassword().equals(password)){
-            Menu.menuCollaborator(this, person);
+            Menu.collaboratorMenu(this, person);
         }
         else {
             System.out.println("\nEmail ou senha incorretos!");
@@ -92,10 +91,7 @@ public class Laboratory {
         System.out.println("(1) Professor");
         System.out.println("(2) Pesquisador");
         System.out.println("(3) Aluno");
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > 3);
+        selec = Menu.readOption(0, 3);
         if(selec == 0) {
             return;
         }
@@ -117,10 +113,7 @@ public class Laboratory {
             System.out.println("(1) Aluno de graduacao");
             System.out.println("(2) Aluno de mestrado");
             System.out.println("(3) Aluno de doutorado");
-            do {
-                selec = read.nextInt();
-                read.nextLine();
-            } while(selec < 1 || selec > 3);
+            selec = Menu.readOption(1, 3);
             if(selec == 1) {
                 type = "Aluno de graduacao";
             }
@@ -153,10 +146,7 @@ public class Laboratory {
         System.out.println("(1) Editar nome");
         System.out.println("(2) Editar email");
         System.out.println("(3) Editar senha");
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > 3);
+        selec = Menu.readOption(0, 3);
         if(selec == 0) {
             return;
         }
@@ -289,10 +279,7 @@ public class Laboratory {
                 System.out.println("\n>Adicionar outro participante?");
                 System.out.println("\n(1) Sim");
                 System.out.println("\n(2) Nao");
-                do {
-                    selec = read.nextInt();
-                    read.nextLine();
-                } while(selec < 1 || selec > 2);
+                selec = Menu.readOption(1, 2);
             } while(selec == 1);
         }
         else {
@@ -331,40 +318,35 @@ public class Laboratory {
         System.out.println("\n>Adicionar agencia financiadora?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = read.nextInt();
-        read.nextLine();
+        selec = Menu.readOption(1, 2);
         if(selec == 1) {
             setProjectFundingAgency(newProject);
         }
         System.out.println("\n>Adicionar valor financiado?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = read.nextInt();
-        read.nextLine();
+        selec = Menu.readOption(1, 2);
         if(selec == 1) {
             setProjectFundingValue(newProject);
         }
         System.out.println("\n>Adicionar objetivo do projeto?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = read.nextInt();
-        read.nextLine();
+        selec = Menu.readOption(1, 2);
         if(selec == 1) {
             setProjectObjective(newProject);
         }
         System.out.println("\n>Adicionar descricao do projeto?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = read.nextInt();
-        read.nextLine();
+        selec = Menu.readOption(1, 2);        
         if(selec == 1) {
             setProjectDescription(newProject);
         }
         System.out.println("\n>Adicionar participantes?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = read.nextInt();
-        read.nextLine();
+        selec = Menu.readOption(1, 2);
         if(selec == 1) {
             addProjectParticipant(newProject);
         }
@@ -399,10 +381,7 @@ public class Laboratory {
         System.out.println("(8) Adicionar participante");
         System.out.println("(9) Remover participante");
         System.out.println("(10) Mudar status");
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > 10);
+        selec = Menu.readOption(0, 10);
         if(selec == 0) {
             return;
         }
@@ -451,13 +430,14 @@ public class Laboratory {
         System.out.println("\n");
         System.out.println("#########--ADICIONAR PRODUCAO ACADEMICA--#########");
         System.out.println("\n>Selecione o tipo de producao academica: ");
+        System.out.println("\n(0) Voltar");
         System.out.println("\n(1) Publicacao");
         System.out.println("\n(2) Orientacao");
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 1 || selec > 2);
-        if(selec == 1) {
+        selec = Menu.readOption(0, 2);
+        if(selec == 0) {
+            return;
+        }
+        else if(selec == 1) {
             Collaborator author;
             String conferenceName;
             Project associatedProject;
@@ -496,10 +476,7 @@ public class Laboratory {
                 System.out.println("\n>Adicionar outro autor?");
                 System.out.println("\n(1) Sim");
                 System.out.println("\n(2) Nao");
-                do {
-                    selec = read.nextInt();
-                    read.nextLine();
-                } while(selec < 1 || selec > 2);
+                selec = Menu.readOption(1, 2);
             } while(selec == 1);
             if(newPublication.getAuthors() == null) {
                 System.out.println("Nenhum autor foi associado! (A publicacao nao foi registrada)");
@@ -508,10 +485,7 @@ public class Laboratory {
             System.out.println("\n>Adicionar projeto de pesquisa associado? (O projeto precisa estar em andamento).");
             System.out.println("\n(1) Sim");
             System.out.println("\n(2) Nao");
-            do {
-                selec = read.nextInt();
-                read.nextLine();
-            } while(selec < 1 || selec > 2);
+            selec = Menu.readOption(1, 2);
             if(selec == 1) {
                 do {
                     ArrayList<Project> inProgress = new ArrayList<Project>();
@@ -528,8 +502,7 @@ public class Laboratory {
                         System.out.println("\n>Tentar novamente?");
                         System.out.println("\n(1) Nao");
                         System.out.println("\n(2) Sim");
-                        selec = read.nextInt();
-                        read.nextLine();
+                        selec = Menu.readOption(1, 2);
                     }
                 } while(selec == 2);
             }
@@ -564,8 +537,7 @@ public class Laboratory {
                 if(advisor == null) {
                     System.out.println("\n(1) Tentar novamente");
                     System.out.println("\n(2) Cancelar");
-                    selec = read.nextInt();
-                    read.nextLine();
+                    selec = Menu.readOption(1, 2);
                     if(selec == 2) {
                         return;
                     }
@@ -581,8 +553,7 @@ public class Laboratory {
                 if(student == null) {
                     System.out.println("\n(1) Tentar novamente");
                     System.out.println("\n(2) Cancelar");
-                    selec = read.nextInt();
-                    read.nextLine();
+                    selec = Menu.readOption(1, 2);
                     if(selec == 2) {
                         return;
                     }
@@ -621,10 +592,7 @@ public class Laboratory {
         for(int i = 0; i < solution.size(); i++) {
             System.out.println("\n("+ i +")"+" "+ solution.get(i).getName() + "\n    Email: " + solution.get(i).getEmail() + "\n");
         }
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > solution.size() - 1); // verifica se a entrada esta dentro do limite
+        selec = Menu.readOption(0, solution.size() - 1);
         return solution.get(selec);
     }
     public void searchByCollaborator() {
@@ -655,10 +623,7 @@ public class Laboratory {
         for(int i = 0; i < solution.size(); i++) {
             System.out.println("\n("+ i +")"+" "+ solution.get(i).getTitle() + "\n    Descricao: " + solution.get(i).getDescription() + "\n");
         }
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > solution.size() - 1); // verifica se a entrada esta dentro do limite
+        selec = Menu.readOption(0, solution.size() - 1);
         return solution.get(selec);
     }
     public void searchByProject() {
@@ -689,10 +654,7 @@ public class Laboratory {
         for(int i = 0; i < solution.size(); i++) {
             System.out.println("\n("+ i +")"+" "+ solution.get(i).getTitle() + "\n    Ano de publicacao: " + solution.get(i).getYearOfPublication() + "\n");
         }
-        do {
-            selec = read.nextInt();
-            read.nextLine();
-        } while(selec < 0 || selec > solution.size() - 1); // verifica se a entrada esta dentro do limite
+        selec = Menu.readOption(0, solution.size() - 1);
         return solution.get(selec);
     }
     public void searchByProduction() {

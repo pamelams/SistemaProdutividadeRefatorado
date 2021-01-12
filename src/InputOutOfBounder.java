@@ -10,7 +10,7 @@ public class InputOutOfBounder extends Exception {
 
     @Override
     public String toString() {
-        return "Entrada fora do limite!";
+        return "\nEntrada fora do limite!";
     }
     
 }
