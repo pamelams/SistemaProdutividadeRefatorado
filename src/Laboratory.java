@@ -189,11 +189,7 @@ public class Laboratory {
             return;
         }
         System.out.println("\n>Digite a data de inicio do projeto(dia, mes e ano separados por espaço): ");
-        day = read.nextInt();
-        month = read.nextInt();
-        year = read.nextInt();
-        read.nextLine();
-        startDate = LocalDate.of(year, month, day);
+        startDate = readDate();
         pj.setStartDate(startDate);
     }
     public void setProjectEndDate(Project pj) {
@@ -204,12 +200,29 @@ public class Laboratory {
             return;
         }
         System.out.println("\n>Digite a data de termino do projeto(dia, mes e ano separados por espaço): ");
-        day = read.nextInt();
-        month = read.nextInt();
-        year = read.nextInt();
-        read.nextLine();
-        endDate = LocalDate.of(year, month, day);
+        endDate = readDate();
         pj.setEndDate(endDate);
+    }
+    public LocalDate readDate() {
+        LocalDate date;
+        int day, month, year;
+        boolean done;
+        do {
+            try {
+                day = read.nextInt();
+                month = read.nextInt();
+                year = read.nextInt();
+                date = LocalDate.of(year, month, day);
+                read.nextLine();
+                done = true;
+                return date;
+            } catch(Exception e) {
+                read.nextLine();
+                System.out.println("\nEntrada invalida! Tente novamente: ");
+                done = false;
+            }
+        } while(!done);
+        return null;
     }
     public void setProjectFundingAgency(Project pj) {
         String fundingAgency;
