@@ -241,8 +241,24 @@ public class Laboratory {
             return;
         }
         System.out.println("\n>Informe o valor financiado(separado por ponto): ");
-        fundingValue = Double.parseDouble(read.nextLine());
+        fundingValue = readDouble();
         pj.setFundingValue(fundingValue);
+    }
+    public Double readDouble() {
+        Double num = (double) 0;
+        boolean done;
+        do {
+            try {
+                System.out.print("\n> ");
+                num = Double.parseDouble(read.nextLine());
+                done = true;
+                return num;
+            } catch(Exception e) {
+                System.out.println("\nEntrada invalida! Tente novamente: ");
+                done = false;
+            }
+        } while(!done);
+        return num;
     }
     public void setProjectObjective(Project pj) {
         String objective;
@@ -436,10 +452,160 @@ public class Laboratory {
         System.out.println("\n");
         System.out.println(pj);
     }
-    public void addAcademicProductionMenu() {
+    public void addPublication() {
+        String title;
+        int yearOfPublication, selec;
+        Collaborator author;
+        String conferenceName;
+        Project associatedProject;
+        boolean added;
+        System.out.println("\n");
+        System.out.println("#########--ADICIONAR PUBLICACAO--#########");
+        System.out.println("\n>Digite o titulo da publicacao: ");
+        title = read.nextLine();
+        System.out.println("\n>Digite o ano de publicacao: ");
+        yearOfPublication = readInt();
+        System.out.println("\n>Digite o nome da conferencia onde foi publicada: ");
+        conferenceName = read.nextLine();
+        Publication newPublication = new Publication(title, yearOfPublication, conferenceName);
+        System.out.println("\n>Adicionar autores: ");
+        do{
+            added = false;
+            author = searchCollaborator(collaborators);
+            if(author != null) {
+                if(newPublication.getAuthors() != null) {
+                    for(int i = 0; i < newPublication.getAuthors().size(); i++) {   // verifica se autor ja foi adicionado
+                        if(author.getEmail() == newPublication.getAuthors().get(i).getEmail()) {
+                            added = true;
+                            break;
+                        }
+                    }
+                }
+                if(added == false) {
+                    newPublication.addAuthor(author);
+                    author.addAcademicProduction(newPublication);
+                } 
+                else {
+                    System.out.println("\nAutor ja foi adicionado!");
+                }
+            }
+            System.out.println("\n>Adicionar outro autor?");
+            System.out.println("\n(1) Sim");
+            System.out.println("\n(2) Nao");
+            selec = Menu.readOption(1, 2);
+        } while(selec == 1);
+        if(newPublication.getAuthors() == null) {
+            System.out.println("Nenhum autor foi associado! (A publicacao nao foi registrada)");
+            return;
+        }
+        System.out.println("\n>Adicionar projeto de pesquisa associado? (O projeto precisa estar em andamento).");
+        System.out.println("\n(1) Sim");
+        System.out.println("\n(2) Nao");
+        selec = Menu.readOption(1, 2);
+        if(selec == 1) {
+            do {
+                ArrayList<Project> inProgress = new ArrayList<Project>();
+                for(int i = 0; i < projects.size(); i++) {
+                    if(projects.get(i).getStatus() == 1) {
+                        inProgress.add(projects.get(i));
+                    }
+                }
+                associatedProject = searchProject(inProgress);  // busca apenas entre os projetos em andamento
+                if(associatedProject != null) {
+                    associatedProject.addPublication(newPublication);
+                }
+                else {
+                    System.out.println("\n>Tentar novamente?");
+                    System.out.println("\n(1) Nao");
+                    System.out.println("\n(2) Sim");
+                    selec = Menu.readOption(1, 2);
+                }
+            } while(selec == 2);
+        }
+        productions.add(newPublication);
+        System.out.println("\n");
+        System.out.println(newPublication);
+    }
+    public void addGuidance() {
         int selec;
         String title;
         int yearOfPublication;
+        Professor advisor;
+        Student student;
+        ArrayList<Collaborator> professors = new ArrayList<Collaborator>();
+        ArrayList<Collaborator> students = new ArrayList<Collaborator>();
+        System.out.println("\n");
+        System.out.println("#########--ADICIONAR ORIENTACAO--#########");
+        System.out.println("\n>Digite o titulo da orientacao: ");
+        title = read.nextLine();
+        System.out.println("\n>Digite o ano de publicacao: ");
+        yearOfPublication = readInt();
+        System.out.println("\n>Adicionar orientador: ");
+        for(int i = 0; i < collaborators.size(); i++) {
+            if(collaborators.get(i).getClass().getSimpleName() == "Professor") {
+                professors.add((Professor) collaborators.get(i));
+            }
+            else if(collaborators.get(i).getClass().getSimpleName() == "Student") {
+                students.add((Student) collaborators.get(i));
+            }
+        }
+        do{
+            advisor = (Professor) searchCollaborator(professors);
+            if(advisor == null) {
+                System.out.println("\n(1) Tentar novamente");
+                System.out.println("\n(2) Cancelar");
+                selec = Menu.readOption(1, 2);
+                if(selec == 2) {
+                    return;
+                }
+            }
+            else {
+                selec = 0;
+            }
+        } while(selec == 1);
+        
+        System.out.println("\n>Adicionar aluno: ");
+        do {
+            student = (Student) searchCollaborator(students);
+            if(student == null) {
+                System.out.println("\n(1) Tentar novamente");
+                System.out.println("\n(2) Cancelar");
+                selec = Menu.readOption(1, 2);
+                if(selec == 2) {
+                    return;
+                }
+            }
+            else {
+                selec = 0;
+            }
+        } while(selec == 1);
+        Guidance newGuidance = new Guidance(title, yearOfPublication, advisor, student);
+        productions.add(newGuidance);
+        advisor.addAcademicProduction(newGuidance);
+        student.addAcademicProduction(newGuidance);
+        System.out.println("\n");
+        System.out.println(newGuidance);
+    }
+    public int readInt() {
+        int num;
+        boolean done;
+        do {
+            try {
+                System.out.print("\n> ");
+                num = read.nextInt();
+                read.nextLine();
+                done = true;
+                return num;
+            } catch(Exception e) {
+                System.out.println("\nEntrada invalida! Tente novamente: ");
+                read.nextLine();
+                done = false;
+            }
+        } while(!done);
+        return -1;
+    }
+    public void addAcademicProductionMenu() {
+        int selec;
         System.out.println("\n");
         System.out.println("#########--ADICIONAR PRODUCAO ACADEMICA--#########");
         System.out.println("\n>Selecione o tipo de producao academica: ");
@@ -451,136 +617,10 @@ public class Laboratory {
             return;
         }
         else if(selec == 1) {
-            Collaborator author;
-            String conferenceName;
-            Project associatedProject;
-            boolean added;
-            System.out.println("\n");
-            System.out.println("#########--ADICIONAR PUBLICACAO--#########");
-            System.out.println("\n>Digite o titulo da publicacao: ");
-            title = read.nextLine();
-            System.out.println("\n>Digite o ano de publicacao: ");
-            yearOfPublication = read.nextInt();
-            read.nextLine();
-            System.out.println("\n>Digite o nome da conferencia onde foi publicada: ");
-            conferenceName = read.nextLine();
-            Publication newPublication = new Publication(title, yearOfPublication, conferenceName);
-            System.out.println("\n>Adicionar autores: ");
-            do{
-                added = false;
-                author = searchCollaborator(collaborators);
-                if(author != null) {
-                    if(newPublication.getAuthors() != null) {
-                        for(int i = 0; i < newPublication.getAuthors().size(); i++) {   // verifica se autor ja foi adicionado
-                            if(author.getEmail() == newPublication.getAuthors().get(i).getEmail()) {
-                                added = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(added == false) {
-                        newPublication.addAuthor(author);
-                        author.addAcademicProduction(newPublication);
-                    } 
-                    else {
-                        System.out.println("\nAutor ja foi adicionado!");
-                    }
-                }
-                System.out.println("\n>Adicionar outro autor?");
-                System.out.println("\n(1) Sim");
-                System.out.println("\n(2) Nao");
-                selec = Menu.readOption(1, 2);
-            } while(selec == 1);
-            if(newPublication.getAuthors() == null) {
-                System.out.println("Nenhum autor foi associado! (A publicacao nao foi registrada)");
-                return;
-            }
-            System.out.println("\n>Adicionar projeto de pesquisa associado? (O projeto precisa estar em andamento).");
-            System.out.println("\n(1) Sim");
-            System.out.println("\n(2) Nao");
-            selec = Menu.readOption(1, 2);
-            if(selec == 1) {
-                do {
-                    ArrayList<Project> inProgress = new ArrayList<Project>();
-                    for(int i = 0; i < projects.size(); i++) {
-                        if(projects.get(i).getStatus() == 1) {
-                            inProgress.add(projects.get(i));
-                        }
-                    }
-                    associatedProject = searchProject(inProgress);  // busca apenas entre os projetos em andamento
-                    if(associatedProject != null) {
-                        associatedProject.addPublication(newPublication);
-                    }
-                    else {
-                        System.out.println("\n>Tentar novamente?");
-                        System.out.println("\n(1) Nao");
-                        System.out.println("\n(2) Sim");
-                        selec = Menu.readOption(1, 2);
-                    }
-                } while(selec == 2);
-            }
-            productions.add(newPublication);
-            System.out.println("\n");
-            System.out.println(newPublication);
-            selec = 1;
+            addPublication();
         }
         else if(selec == 2) {
-            Professor advisor;
-            Student student;
-            ArrayList<Collaborator> professors = new ArrayList<Collaborator>();
-            ArrayList<Collaborator> students = new ArrayList<Collaborator>();
-            System.out.println("\n");
-            System.out.println("#########--ADICIONAR ORIENTACAO--#########");
-            System.out.println("\n>Digite o titulo da orientacao: ");
-            title = read.nextLine();
-            System.out.println("\n>Digite o ano de publicacao: ");
-            yearOfPublication = read.nextInt();
-            read.nextLine();
-            System.out.println("\n>Adicionar orientador: ");
-            for(int i = 0; i < collaborators.size(); i++) {
-                if(collaborators.get(i).getClass().getSimpleName() == "Professor") {
-                    professors.add((Professor) collaborators.get(i));
-                }
-                else if(collaborators.get(i).getClass().getSimpleName() == "Student") {
-                    students.add((Student) collaborators.get(i));
-                }
-            }
-            do{
-                advisor = (Professor) searchCollaborator(professors);
-                if(advisor == null) {
-                    System.out.println("\n(1) Tentar novamente");
-                    System.out.println("\n(2) Cancelar");
-                    selec = Menu.readOption(1, 2);
-                    if(selec == 2) {
-                        return;
-                    }
-                }
-                else {
-                    selec = 0;
-                }
-            } while(selec == 1);
-            
-            System.out.println("\n>Adicionar aluno: ");
-            do {
-                student = (Student) searchCollaborator(students);
-                if(student == null) {
-                    System.out.println("\n(1) Tentar novamente");
-                    System.out.println("\n(2) Cancelar");
-                    selec = Menu.readOption(1, 2);
-                    if(selec == 2) {
-                        return;
-                    }
-                }
-                else {
-                    selec = 0;
-                }
-            } while(selec == 1);
-            Guidance newGuidance = new Guidance(title, yearOfPublication, advisor, student);
-            productions.add(newGuidance);
-            advisor.addAcademicProduction(newGuidance);
-            student.addAcademicProduction(newGuidance);
-            System.out.println("\n");
-            System.out.println(newGuidance);
+            addGuidance();
         }
     }
     public Collaborator searchCollaborator(ArrayList<Collaborator> collaborators) {
