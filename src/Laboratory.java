@@ -91,11 +91,8 @@ public class Laboratory {
         System.out.println("(1) Professor");
         System.out.println("(2) Pesquisador");
         System.out.println("(3) Aluno");
-        selec = Menu.readOption(0, 3);
-        if(selec == 0) {
-            return;
-        }
-        else if(selec == 1) {
+        selec = ReadData.readOption(1, 3);
+        if(selec == 1) {
             Professor newCollaborator = new Professor(name, email, password);
             collaborators.add(newCollaborator);
             System.out.println("\n");
@@ -113,7 +110,7 @@ public class Laboratory {
             System.out.println("(1) Aluno de graduacao");
             System.out.println("(2) Aluno de mestrado");
             System.out.println("(3) Aluno de doutorado");
-            selec = Menu.readOption(1, 3);
+            selec = ReadData.readOption(1, 3);
             if(selec == 1) {
                 type = "Aluno de graduacao";
             }
@@ -146,7 +143,7 @@ public class Laboratory {
         System.out.println("(1) Editar nome");
         System.out.println("(2) Editar email");
         System.out.println("(3) Editar senha");
-        selec = Menu.readOption(0, 3);
+        selec = ReadData.readOption(0, 3);
         if(selec == 0) {
             return;
         }
@@ -182,47 +179,24 @@ public class Laboratory {
         pj.setTitle(title);
     }
     public void setProjectStartDate(Project pj) {
-        int day, month, year;
         LocalDate startDate;
         if(pj.getStatus() != 0) {
             System.out.println("A data de inicio nao pode ser editada! (O projeto nao esta em elaboracao)");
             return;
         }
         System.out.println("\n>Digite a data de inicio do projeto(dia, mes e ano separados por espaço): ");
-        startDate = readDate();
+        startDate = ReadData.readDate();
         pj.setStartDate(startDate);
     }
     public void setProjectEndDate(Project pj) {
         LocalDate endDate;
-        int day, month, year;
         if(pj.getStatus() != 0) {
             System.out.println("A data de termino nao pode ser editada! (O projeto nao esta em elaboracao)");
             return;
         }
         System.out.println("\n>Digite a data de termino do projeto(dia, mes e ano separados por espaço): ");
-        endDate = readDate();
+        endDate = ReadData.readDate();
         pj.setEndDate(endDate);
-    }
-    public LocalDate readDate() {
-        LocalDate date;
-        int day, month, year;
-        boolean done;
-        do {
-            try {
-                day = read.nextInt();
-                month = read.nextInt();
-                year = read.nextInt();
-                date = LocalDate.of(year, month, day);
-                read.nextLine();
-                done = true;
-                return date;
-            } catch(Exception e) {
-                read.nextLine();
-                System.out.println("\nEntrada invalida! Tente novamente: ");
-                done = false;
-            }
-        } while(!done);
-        return null;
     }
     public void setProjectFundingAgency(Project pj) {
         String fundingAgency;
@@ -241,24 +215,8 @@ public class Laboratory {
             return;
         }
         System.out.println("\n>Informe o valor financiado(separado por ponto): ");
-        fundingValue = readDouble();
+        fundingValue = ReadData.readDouble();
         pj.setFundingValue(fundingValue);
-    }
-    public Double readDouble() {
-        Double num = (double) 0;
-        boolean done;
-        do {
-            try {
-                System.out.print("\n> ");
-                num = Double.parseDouble(read.nextLine());
-                done = true;
-                return num;
-            } catch(Exception e) {
-                System.out.println("\nEntrada invalida! Tente novamente: ");
-                done = false;
-            }
-        } while(!done);
-        return num;
     }
     public void setProjectObjective(Project pj) {
         String objective;
@@ -308,7 +266,7 @@ public class Laboratory {
                 System.out.println("\n>Adicionar outro participante?");
                 System.out.println("\n(1) Sim");
                 System.out.println("\n(2) Nao");
-                selec = Menu.readOption(1, 2);
+                selec = ReadData.readOption(1, 2);
             } while(selec == 1);
         }
         else {
@@ -347,35 +305,35 @@ public class Laboratory {
         System.out.println("\n>Adicionar agencia financiadora?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = Menu.readOption(1, 2);
+        selec = ReadData.readOption(1, 2);
         if(selec == 1) {
             setProjectFundingAgency(newProject);
         }
         System.out.println("\n>Adicionar valor financiado?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = Menu.readOption(1, 2);
+        selec = ReadData.readOption(1, 2);
         if(selec == 1) {
             setProjectFundingValue(newProject);
         }
         System.out.println("\n>Adicionar objetivo do projeto?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = Menu.readOption(1, 2);
+        selec = ReadData.readOption(1, 2);
         if(selec == 1) {
             setProjectObjective(newProject);
         }
         System.out.println("\n>Adicionar descricao do projeto?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = Menu.readOption(1, 2);        
+        selec = ReadData.readOption(1, 2);        
         if(selec == 1) {
             setProjectDescription(newProject);
         }
         System.out.println("\n>Adicionar participantes?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
-        selec = Menu.readOption(1, 2);
+        selec = ReadData.readOption(1, 2);
         if(selec == 1) {
             addProjectParticipant(newProject);
         }
@@ -410,7 +368,7 @@ public class Laboratory {
         System.out.println("(8) Adicionar participante");
         System.out.println("(9) Remover participante");
         System.out.println("(10) Mudar status");
-        selec = Menu.readOption(0, 10);
+        selec = ReadData.readOption(0, 10);
         if(selec == 0) {
             return;
         }
@@ -492,7 +450,7 @@ public class Laboratory {
             System.out.println("\n>Adicionar outro autor?");
             System.out.println("\n(1) Sim");
             System.out.println("\n(2) Nao");
-            selec = Menu.readOption(1, 2);
+            selec = ReadData.readOption(1, 2);
         } while(selec == 1);
         if(newPublication.getAuthors() == null) {
             System.out.println("Nenhum autor foi associado! (A publicacao nao foi registrada)");
@@ -501,7 +459,7 @@ public class Laboratory {
         System.out.println("\n>Adicionar projeto de pesquisa associado? (O projeto precisa estar em andamento).");
         System.out.println("\n(1) Sim");
         System.out.println("\n(2) Nao");
-        selec = Menu.readOption(1, 2);
+        selec = ReadData.readOption(1, 2);
         if(selec == 1) {
             do {
                 ArrayList<Project> inProgress = new ArrayList<Project>();
@@ -518,7 +476,7 @@ public class Laboratory {
                     System.out.println("\n>Tentar novamente?");
                     System.out.println("\n(1) Nao");
                     System.out.println("\n(2) Sim");
-                    selec = Menu.readOption(1, 2);
+                    selec = ReadData.readOption(1, 2);
                 }
             } while(selec == 2);
         }
@@ -554,7 +512,7 @@ public class Laboratory {
             if(advisor == null) {
                 System.out.println("\n(1) Tentar novamente");
                 System.out.println("\n(2) Cancelar");
-                selec = Menu.readOption(1, 2);
+                selec = ReadData.readOption(1, 2);
                 if(selec == 2) {
                     return;
                 }
@@ -570,7 +528,7 @@ public class Laboratory {
             if(student == null) {
                 System.out.println("\n(1) Tentar novamente");
                 System.out.println("\n(2) Cancelar");
-                selec = Menu.readOption(1, 2);
+                selec = ReadData.readOption(1, 2);
                 if(selec == 2) {
                     return;
                 }
@@ -612,7 +570,7 @@ public class Laboratory {
         System.out.println("\n(0) Voltar");
         System.out.println("\n(1) Publicacao");
         System.out.println("\n(2) Orientacao");
-        selec = Menu.readOption(0, 2);
+        selec = ReadData.readOption(0, 2);
         if(selec == 0) {
             return;
         }
@@ -626,7 +584,7 @@ public class Laboratory {
     public Collaborator searchCollaborator(ArrayList<Collaborator> collaborators) {
         ArrayList<Collaborator> solution = new ArrayList<Collaborator>();
         String name;
-        int selec;
+        int selec, aux;
         System.out.println("\n");
         System.out.println("#########--BUSCAR COLABORADOR--#########");
         System.out.println(">Digite o nome ou email do colaborador: ");
@@ -642,11 +600,18 @@ public class Laboratory {
             return null;
         }
         System.out.println("\n>Selecione o colaborador: ");
+        System.out.println("\n(0) Voltar\n");
         for(int i = 0; i < solution.size(); i++) {
-            System.out.println("\n("+ i +")"+" "+ solution.get(i).getName() + "\n    Email: " + solution.get(i).getEmail() + "\n");
+            aux = i + 1;
+            System.out.println("\n("+ aux +")"+" "+ solution.get(i).getName() + "\n    Email: " + solution.get(i).getEmail() + "\n");
         }
-        selec = Menu.readOption(0, solution.size() - 1);
-        return solution.get(selec);
+        selec = ReadData.readOption(0, solution.size());
+        if(selec == 0) {
+            return null;
+        }
+        else {
+            return solution.get(selec-1);
+        }
     }
     public void searchByCollaborator() {
         Collaborator person = searchCollaborator(collaborators);
@@ -676,7 +641,7 @@ public class Laboratory {
         for(int i = 0; i < solution.size(); i++) {
             System.out.println("\n("+ i +")"+" "+ solution.get(i).getTitle() + "\n    Descricao: " + solution.get(i).getDescription() + "\n");
         }
-        selec = Menu.readOption(0, solution.size() - 1);
+        selec = ReadData.readOption(0, solution.size() - 1);
         return solution.get(selec);
     }
     public void searchByProject() {
@@ -707,7 +672,7 @@ public class Laboratory {
         for(int i = 0; i < solution.size(); i++) {
             System.out.println("\n("+ i +")"+" "+ solution.get(i).getTitle() + "\n    Ano de publicacao: " + solution.get(i).getYearOfPublication() + "\n");
         }
-        selec = Menu.readOption(0, solution.size() - 1);
+        selec = ReadData.readOption(0, solution.size() - 1);
         return solution.get(selec);
     }
     public void searchByProduction() {
