@@ -180,8 +180,7 @@ public class Project {
             return false;
         }
     }
-    @Override
-    public String toString() {
+    public String writeContents() {
         String toPrint;
         toPrint = "Titulo: " + this.getTitle();
         if(this.getStatus() == 0) {
@@ -234,5 +233,9 @@ public class Project {
             }
         }
         return toPrint;
+    }
+    @Override
+    public String toString() {
+        return writeContents();
     }
 }

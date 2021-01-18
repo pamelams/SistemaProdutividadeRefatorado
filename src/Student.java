@@ -55,7 +55,8 @@ public class Student extends Collaborator {
         }  
     }
     @Override
-    public String toString() {
-        return super.toString() + "\nVinculo: " + this.getType();
+    public String writeContents() {
+        // TODO Auto-generated method stub
+        return super.writeContents() + "\nVinculo: " + this.getType();
     }
 }

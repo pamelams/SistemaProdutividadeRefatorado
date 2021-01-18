@@ -1,14 +1,62 @@
-## Getting Started
+# Sistema de Produtividade Acadêmica
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Como executar:
 
-## Folder Structure
+Para executar o sistema, basta compilar todas as classes java juntas e executar a classe App.
 
-The workspace contains two folders by default, where:
+## Para fazer login como administrador:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+* Usuário: admin
+* Senha: 1234
 
-## Dependency Management
+## Refatoramento
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+Esse projeto é o refatoramento do projeto [Sistema de Produtividade Acadêmica](https://github.com/pamelams/SistemaProdutividadeAcademica). Foi realizado o tratamento de exceções e a implementação dos padrões de projeto Extract Method e
+
+### Extract Method
+
+Remoção de duplicação de código através da criação de um método que contenha o código duplicado.
+
+### Move Accumulation to Collecting Parameter
+
+
+## Funcionalidades do sistema:
+
+### Login como administrador:
+
+O administrador é responsável pela manutenção de todas as informações do sistema. Assim, é ele o responsável por adicionar novos colaboradores, projetos e produções acadêmicas ao sistema. Também é possível editar as informações de colaboradores e projetos já adicionados.
+
+### Login como colaborador:
+
+Os colaboradores podem fazer login no sistema através de seu email e senha. Os colaboradores não tem permissão de modificar as informações do sistema, sendo possível apenas consultar as informações dos projetos, dos colaboradores e das produções acadêmicas.
+
+### Alocação de participantes:
+
+A alocação e desalocação de participantes é permitida apenas quando o projeto está “em elaboração”. Um aluno de graduação não pode estar participando de mais de dois projetos não concluídos. 
+
+### Alteração do status
+
+O administrador pode mudar o status de um projeto de "em elaboração" para "em andamento" apenas quando se constarem todas as informações básicas a respeito do projeto cadastradas (título, data de início, data de término, agência financiadora, valor financiado, objetivo, descrição e participantes). Deve haver pelo menos um professor alocado para um projeto entrar "em andamento".
+O administrador pode mudar o status de um projeto de "em andamento" para "concluído" apenas se existir alguma publicação associada ao projeto.
+
+### Produção acadêmica
+
+O sistema permite a inclusão de informações referentes à produção acadêmica (orientações e publicações). Uma orientação é feita por um professor que orienta um aluno do laboratório. Uma orientação possui título e ano de publicação.
+Todos os colaboradores podem ter publicações, e uma publicação pode ter vários autores. Uma publicação possui título, nome da conferência onde foi publicada, ano de publicação e projeto de pesquisa associado (se houver). Uma publicação só poderá ser associada a um projeto quando o status do projeto
+estiver “em andamento”.
+
+### Consulta
+
+* Consulta por colaborador: Através do nome ou email informado, o sistema mostrará uma lista de colaboradores correspondente. Selecionando o colaborador desejado, o sistema mostrará suas informações(nome, email, um histórico contendo a lista de projetos nos quais este colaborador participa ou participou, ordenados de forma decrescente pela data de término, e a lista de sua produção acadêmica).
+* Consulta por projeto: Através do título informado, o sistema mostrará uma lista de projetos correspondente. Selecionando o projeto desejado, o sistema mostrará seus dados (incluindo colaboradores alocados e uma lista contendo toda a produção acadêmica do projeto, ordenada de forma decrescente de data (ano)).
+* Consulta por produção acadêmica: Através do título da publicação ou orientação, o sistema informará uma lista de produções acadêmicas correspondente. Selecionando a produção acadêmica desejada, o sistema mostrará seus dados.
+
+### Relatório de produtividade acadêmica
+
+O sistema fornece um relatório de produção acadêmica do laboratório, contendo:
+* Número de colaboradores;
+* Número de projetos em elaboração;
+* Número de projetos em andamento;
+* Número de projetos concluídos;
+* Número total de projetos;
+* Número de produção acadêmica por tipo de produção.

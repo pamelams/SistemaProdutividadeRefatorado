@@ -8,7 +8,8 @@ public class Researcher extends Collaborator {
         super(name, email, password, history, academicProduction);
     }
     @Override
-    public String toString() {
-        return super.toString() + "\nVinculo: Pesquisador";
+    public String writeContents() {
+        // TODO Auto-generated method stub
+        return super.writeContents() + "\nVinculo: Pesquisador";
     }
 }

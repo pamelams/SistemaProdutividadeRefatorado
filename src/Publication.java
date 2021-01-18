@@ -38,10 +38,7 @@ public class Publication extends AcademicProduction {
     public ArrayList<Collaborator> getAuthors() {
         return authors;
     }
-    /* Uma publicação deve ter titulo, nome da conferência onde foi publicada, ano de publicação e projeto
-       de pesquisa associado (se houver) */
-    @Override
-    public String toString() {
+    public String writeContents() {
         String toPrint;
         toPrint = "Titulo: " + this.getTitle();
         toPrint = toPrint + "\nConferencia: " + this.getConferenceName();
@@ -61,5 +58,11 @@ public class Publication extends AcademicProduction {
         }
         
         return toPrint;
+    }
+    /* Uma publicação deve ter titulo, nome da conferência onde foi publicada, ano de publicação e projeto
+       de pesquisa associado (se houver) */
+    @Override
+    public String toString() {
+        return writeContents();
     }
 }

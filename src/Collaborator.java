@@ -83,11 +83,7 @@ public class Collaborator {
             this.academicProduction.add(newProduction);
         }
     }
-    /* dado um colaborador, o sistema deve mostrar suas informacoes: nome, email, um historico contendo a lista 
-       de projetos nos quais este colaborador participou, incluindo os projetos em andamento ordenados de forma
-       decrescente pela data de termino, incluindo tambem a lista de sua producao academica */
-    @Override
-    public String toString() {
+    public String writeContents() {
         String toPrint;
         toPrint = "Nome: " + this.getName();
         toPrint = toPrint + "\nEmail: " + this.getEmail();
@@ -110,5 +106,12 @@ public class Collaborator {
             }
         }
         return toPrint;
+    }
+    /* dado um colaborador, o sistema deve mostrar suas informacoes: nome, email, um historico contendo a lista 
+       de projetos nos quais este colaborador participou, incluindo os projetos em andamento ordenados de forma
+       decrescente pela data de termino, incluindo tambem a lista de sua producao academica */
+    @Override
+    public String toString() {
+        return writeContents();
     }
 }

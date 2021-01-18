@@ -9,7 +9,8 @@ public class Professor extends Collaborator {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "\nVinculo: Professor";
+    public String writeContents() {
+        // TODO Auto-generated method stub
+        return super.writeContents() + "\nVinculo: Professor";
     }
 }
