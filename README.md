@@ -15,11 +15,11 @@ Esse projeto é o refatoramento do projeto [Sistema de Produtividade Acadêmica]
 
 ### Extract Method
 
-Os métodos "addNewCollaborator" e "EditCollaborator" possuíam muitas duplicações de código entre si, isso foi resolvido com a criação de vários métodos que continham as partes duplicadas. O mesmo ocorreu com os métodos "addNewProject" e "editProject". Todos esses métodos se encontravam na classe "Menu" e foram movidos para uma nova classe "Laboratory" no refatoramento.
+Os métodos [addNewCollaborator](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Laboratory.java#L122) e [EditCollaborator](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Laboratory.java#L139) possuíam muitas duplicações de código entre si, isso foi resolvido com a criação de vários métodos que continham as partes duplicadas. O mesmo ocorreu com os métodos [addNewProject](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Laboratory.java#L312) e [editProject](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Laboratory.java#L363). Todos esses métodos se encontravam na classe "Menu" e foram movidos para uma nova classe "Laboratory" no refatoramento.
 
 ### Move Accumulation to Collecting Parameter
 
-O pré-processamento da string a ser mostrada ao printar o objeto foi retirado do método "toString" e colocado em um novo método "writeContents", isso foi feito nas classes "Collaborator", "Project", "Guidance" e "Publication".
+O pré-processamento da string a ser mostrada ao printar o objeto foi retirado do método "toString" e colocado em novos métodos que serão invocados pelo método "writeContents", que por sua vez retornará a string pronta para o "toString". Isso foi feito nas classes "Collaborator", "Project", "Guidance" e "Publication".
 
 ## Funcionalidades do sistema:
 
