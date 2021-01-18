@@ -11,14 +11,15 @@ Para executar o sistema, basta compilar todas as classes java juntas e executar 
 
 ## Refatoramento
 
-Esse projeto é o refatoramento do projeto [Sistema de Produtividade Acadêmica](https://github.com/pamelams/SistemaProdutividadeAcademica). Foi realizado o tratamento de exceções e a implementação dos padrões de projeto Extract Method e
+Esse projeto é o refatoramento do projeto [Sistema de Produtividade Acadêmica](https://github.com/pamelams/SistemaProdutividadeAcademica). Foi realizado o tratamento de exceções e a implementação dos seguintes padrões de projeto:
 
 ### Extract Method
 
-Remoção de duplicação de código através da criação de um método que contenha o código duplicado.
+Os métodos "addNewCollaborator" e "EditCollaborator" possuíam muitas duplicações de código entre si, isso foi resolvido com a criação de vários métodos que continham as partes duplicadas. O mesmo ocorreu com os métodos "addNewProject" e "editProject". Todos esses métodos se encontravam na classe "Menu" e foram movidos para uma nova classe "Laboratory" no refatoramento.
 
 ### Move Accumulation to Collecting Parameter
 
+O pré-processamento da string a ser mostrada ao printar o objeto foi retirado do método "toString" e colocado em um novo método "writeContents", isso foi feito nas classes "Collaborator", "Project", "Guidance" e "Publication".
 
 ## Funcionalidades do sistema:
 
