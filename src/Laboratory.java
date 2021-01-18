@@ -53,15 +53,24 @@ public class Laboratory {
         System.out.println("#########--MINHAS INFORMACOES--#########");
         System.out.println(me);
     }
-    public String setCollaboratorName() {
+    public void setCollaboratorName(Collaborator c) {
+        String name;
         System.out.println("\n>Digite o nome do colaborador: ");
-        return read.nextLine();
+        name = read.nextLine();
+        c.setName(name);
     }
-    public String setCollaboratorEmail() {
+    public void setCollaboratorEmail(Collaborator c) {
+        String email;
         System.out.println("\n>Digite o email do colaborador: ");
-        return read.nextLine();
+        email = read.nextLine();
+        if(checkEmail(email) != null) {
+            System.out.println("\nEmail ja cadastrado!");
+            c.setEmail(null);
+            return;
+        }
+        c.setEmail(email);
     }
-    public String setCollaboratorPassword() {
+    public void setCollaboratorPassword(Collaborator c) {
         String password, confirm;
         do{
             System.out.println("\n>Digite a senha: ");
@@ -72,37 +81,22 @@ public class Laboratory {
                 System.out.println("\nSenha incorreta!");
             }
         }while(!(password.equals(confirm)));    // confirmacao de senha
-        return password;
+        c.setPassword(password);
     }
-    public void addNewCollaborator() {
-        CompareName cn = new CompareName();
-        String name, email, password;
+    public Collaborator createCollaborator() {
         int selec;
-        System.out.println("\n");
-        System.out.println("#########--ADICIONAR NOVO COLABORADOR--#########");
-        name = setCollaboratorName();
-        email = setCollaboratorEmail();
-        if(checkEmail(email) != null) {
-            System.out.println("\nEmail ja cadastrado!");
-            return;
-        }
-        password = setCollaboratorPassword();
         System.out.println("\n>Selecione o tipo de vinculo:");
         System.out.println("(1) Professor");
         System.out.println("(2) Pesquisador");
         System.out.println("(3) Aluno");
         selec = ReadData.readOption(1, 3);
         if(selec == 1) {
-            Professor newCollaborator = new Professor(name, email, password);
-            collaborators.add(newCollaborator);
-            System.out.println("\n");
-            System.out.println(newCollaborator);
+            Professor newCollaborator = new Professor();
+            return newCollaborator;
         }
         else if(selec == 2) {
-            Researcher newCollaborator = new Researcher(name, email, password);
-            collaborators.add(newCollaborator);
-            System.out.println("\n");
-            System.out.println(newCollaborator);
+            Researcher newCollaborator = new Researcher();
+            return newCollaborator;
         }
         else if(selec == 3) {
             String type = "Aluno";
@@ -120,16 +114,30 @@ public class Laboratory {
             else if(selec == 3) {
                 type = "Aluno de doutorado";
             }
-            Student newCollaborator = new Student(name, email, password, type);
-            collaborators.add(newCollaborator);
-            System.out.println("\n");
-            System.out.println(newCollaborator);
+            Student newCollaborator = new Student(type);
+            return newCollaborator;
         }
+        return null;
+    }
+    public void addNewCollaborator() {
+        CompareName cn = new CompareName();
+        Collaborator newCollaborator;
+        System.out.println("\n");
+        System.out.println("#########--ADICIONAR NOVO COLABORADOR--#########");
+        newCollaborator = createCollaborator();
+        setCollaboratorName(newCollaborator);
+        setCollaboratorEmail(newCollaborator);
+        if(newCollaborator.getEmail() == null) {
+            return;
+        }
+        setCollaboratorPassword(newCollaborator);
+        collaborators.add(newCollaborator);
+        System.out.println("\n");
+        System.out.println(newCollaborator);
         Collections.sort(collaborators, cn);
     }
     public void editCollaborator() {
         int selec;
-        String change;
         System.out.println("\n>Selecione o colaborador que deseja editar:");
         Collaborator person = searchCollaborator(collaborators);
         if(person == null) {
@@ -148,16 +156,13 @@ public class Laboratory {
             return;
         }
         else if(selec == 1) {
-            change = setCollaboratorName();
-            person.setName(change);
+            setCollaboratorName(person);
         }
         else if(selec == 2) {
-            change = setCollaboratorEmail();
-            person.setEmail(change);
+            setCollaboratorEmail(person);
         }
         else if(selec == 3) {
-            change = setCollaboratorPassword();
-            person.setPassword(change);
+            setCollaboratorPassword(person);
         }
         System.out.println("\n");
         System.out.println(person);
@@ -197,6 +202,20 @@ public class Laboratory {
         System.out.println("\n>Digite a data de termino do projeto(dia, mes e ano separados por espaço): ");
         endDate = ReadData.readDate();
         pj.setEndDate(endDate);
+    }
+    public void setProjectDates(Project pj) {
+        boolean done = false;
+        do {
+            setProjectStartDate(pj);
+            setProjectEndDate(pj);
+            if(pj.getStartDate().isAfter(pj.getEndDate())) {
+                System.out.println("\nA data de inicio nao pode ser depois da data de termino!");
+            }
+            else {
+                done = true;
+                return;
+            }
+        }while(!done);
     }
     public void setProjectFundingAgency(Project pj) {
         String fundingAgency;
@@ -300,8 +319,7 @@ public class Laboratory {
         if(newProject.getTitle() == null) {
             return;
         }
-        setProjectStartDate(newProject);
-        setProjectEndDate(newProject);
+        setProjectDates(newProject);
         System.out.println("\n>Adicionar agencia financiadora?");
         System.out.println("\n(1) Adicionar agora");
         System.out.println("\n(2) Adicionar depois");
@@ -422,7 +440,7 @@ public class Laboratory {
         System.out.println("\n>Digite o titulo da publicacao: ");
         title = read.nextLine();
         System.out.println("\n>Digite o ano de publicacao: ");
-        yearOfPublication = readInt();
+        yearOfPublication = ReadData.readInt();
         System.out.println("\n>Digite o nome da conferencia onde foi publicada: ");
         conferenceName = read.nextLine();
         Publication newPublication = new Publication(title, yearOfPublication, conferenceName);
@@ -497,7 +515,7 @@ public class Laboratory {
         System.out.println("\n>Digite o titulo da orientacao: ");
         title = read.nextLine();
         System.out.println("\n>Digite o ano de publicacao: ");
-        yearOfPublication = readInt();
+        yearOfPublication = ReadData.readInt();
         System.out.println("\n>Adicionar orientador: ");
         for(int i = 0; i < collaborators.size(); i++) {
             if(collaborators.get(i).getClass().getSimpleName() == "Professor") {
@@ -521,7 +539,6 @@ public class Laboratory {
                 selec = 0;
             }
         } while(selec == 1);
-        
         System.out.println("\n>Adicionar aluno: ");
         do {
             student = (Student) searchCollaborator(students);
@@ -543,24 +560,6 @@ public class Laboratory {
         student.addAcademicProduction(newGuidance);
         System.out.println("\n");
         System.out.println(newGuidance);
-    }
-    public int readInt() {
-        int num;
-        boolean done;
-        do {
-            try {
-                System.out.print("\n> ");
-                num = read.nextInt();
-                read.nextLine();
-                done = true;
-                return num;
-            } catch(Exception e) {
-                System.out.println("\nEntrada invalida! Tente novamente: ");
-                read.nextLine();
-                done = false;
-            }
-        } while(!done);
-        return -1;
     }
     public void addAcademicProductionMenu() {
         int selec;
