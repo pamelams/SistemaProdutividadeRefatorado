@@ -180,37 +180,62 @@ public class Project {
             return false;
         }
     }
-    public String writeContents() {
-        String toPrint;
-        toPrint = "Titulo: " + this.getTitle();
+    public String writeTitle() {
+        return "Titulo: " + this.getTitle();
+    }
+    public String writeStatus() {
         if(this.getStatus() == 0) {
-            toPrint = toPrint + "\nStatus: Em elaboracao";
+            return "\nStatus: Em elaboracao";
         }
         else if(this.getStatus() == 1) {
-            toPrint = toPrint + "\nStatus: Em andamento";
+            return "\nStatus: Em andamento";
         }
         else if(this.getStatus() == 2) {
-            toPrint = toPrint + "\nStatus: Concluido";
+            return "\nStatus: Concluido";
         }
-        toPrint = toPrint + "\nData de inicio: " + this.printStartDate();
-        toPrint = toPrint + "\nData de termino: " + this.printEndDate();
-        toPrint = toPrint + "\nAgencia financiadora: ";
+        return "\nStatus: ";
+    }
+    public String writeStartDate() {
+        return "\nData de inicio: " + this.printStartDate();
+    }
+    public String writeEndDate() {
+        return "\nData de termino: " + this.printEndDate();
+    }
+    public String writeFundingAgency() {
+        String toPrint;
+        toPrint = "\nAgencia financiadora: ";
         if(this.getFundingAgency() != null) {
             toPrint = toPrint + this.getFundingAgency();
         }
-        toPrint = toPrint + "\nValor financiado: ";
+        return toPrint;
+    }
+    public String writeFundingValue() {
+        String toPrint;
+        toPrint = "\nValor financiado: ";
         if(this.getFundingValue() != null) {
             toPrint = toPrint + this.getFundingValue();
         }
-        toPrint = toPrint + "\nObjetivo: ";
+        return toPrint;
+    }
+    public String writeObjective() {
+        String toPrint;
+        toPrint = "\nObjetivo: ";
         if(this.getObjective() != null) {
             toPrint = toPrint + this.getObjective();
         }
-        toPrint = toPrint + "\nDescrição: ";
+        return toPrint;
+    }
+    public String writeDescription() {
+        String toPrint;
+        toPrint = "\nDescrição: ";
         if(this.getDescription() != null) {
             toPrint = toPrint + this.getDescription();
         }
-        toPrint = toPrint + "\nParticipantes: ";
+        return toPrint;
+    }
+    public String writeParticipants() {
+        String toPrint;
+        toPrint = "\nParticipantes: ";
         if(this.participants != null) {
             for(int i = 0; i < this.getParticipants().size(); i++){
                 if(i == 0) {
@@ -221,7 +246,11 @@ public class Project {
                 }
             }
         }
-        toPrint = toPrint + "\nPublicacoes: ";
+        return toPrint;
+    }
+    public String writePublications() {
+        String toPrint;
+        toPrint = "\nPublicacoes: ";
         if(this.publications != null) {
             for(int i = 0; i < this.getPublications().size(); i++){
                 if(i == 0) {
@@ -233,6 +262,9 @@ public class Project {
             }
         }
         return toPrint;
+    }
+    public String writeContents() {
+        return writeTitle() + writeStatus() + writeStartDate() + writeEndDate() + writeFundingAgency() +writeFundingValue() + writeObjective() +writeDescription() + writeParticipants() + writePublications();
     }
     @Override
     public String toString() {

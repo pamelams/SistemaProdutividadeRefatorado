@@ -20,13 +20,14 @@ public class Guidance extends AcademicProduction {
     public Student getStudent() {
         return student;
     }
+    public String writeStudent() {
+        return "\nAluno: " + this.getStudent().getName();
+    }
+    public String writeAdvisor() {
+        return "\nOrientador: " + this.getAdvisor().getName();
+    }
     public String writeContents() {
-        String toPrint;
-        toPrint = "Titulo: " + this.getTitle();
-        toPrint = toPrint + "\nAluno: " + this.getStudent().getName();
-        toPrint = toPrint + "\nOrientador: " + this.getAdvisor().getName();
-        toPrint = toPrint + "\nAno de publicacao: " + this.getYearOfPublication();
-        return toPrint;
+        return writeTitle() + writeStudent() + writeAdvisor() + writeYearOfPublication();
     }
     @Override
     public String toString() {

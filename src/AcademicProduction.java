@@ -19,4 +19,10 @@ public class AcademicProduction {
     public int getYearOfPublication() {
         return yearOfPublication;
     }
+    public String writeTitle() {
+        return "Titulo: " + this.getTitle();
+    }
+    public String writeYearOfPublication() {
+        return "\nAno de publicacao: " + this.getYearOfPublication();
+    }
 }

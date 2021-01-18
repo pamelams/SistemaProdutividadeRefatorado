@@ -81,11 +81,15 @@ public class Collaborator {
             this.academicProduction.add(newProduction);
         }
     }
-    public String writeContents() {
+    public String writeName() {
+        return "Nome: " + this.getName();
+    }
+    public String writeEmail() {
+        return "\nEmail: " + this.getEmail();
+    }
+    public String writeHistory() {
         String toPrint;
-        toPrint = "Nome: " + this.getName();
-        toPrint = toPrint + "\nEmail: " + this.getEmail();
-        toPrint = toPrint + "\nHistorico: ";
+        toPrint = "\nHistorico: ";
         for(int i = 0; i < this.getHistory().size(); i++) {
             if(i == 0) {
                 toPrint = toPrint + this.getHistory().get(i).getTitle() + " (" + this.getHistory().get(i).getEndDate().getYear() + ")";
@@ -94,7 +98,11 @@ public class Collaborator {
                 toPrint = toPrint + "\n           " + this.getHistory().get(i).getTitle() + " (" + this.getHistory().get(i).getEndDate().getYear() + ")";
             }
         }
-        toPrint = toPrint + "\nProducao academica: ";
+        return toPrint;
+    }
+    public String writeAcademicProduction() {
+        String toPrint;
+        toPrint = "\nProducao academica: ";
         for(int i = 0; i < this.getAcademicProduction().size(); i++) {
             if(i == 0) {
                 toPrint = toPrint + this.getAcademicProduction().get(i).getTitle() + " (" + this.getAcademicProduction().get(i).getYearOfPublication() + ")";
@@ -104,6 +112,9 @@ public class Collaborator {
             }
         }
         return toPrint;
+    }
+    public String writeContents() {
+        return writeName() + writeEmail() + writeHistory() + writeAcademicProduction();
     }
     /* dado um colaborador, o sistema deve mostrar suas informacoes: nome, email, um historico contendo a lista 
        de projetos nos quais este colaborador participou, incluindo os projetos em andamento ordenados de forma

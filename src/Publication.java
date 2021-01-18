@@ -38,16 +38,20 @@ public class Publication extends AcademicProduction {
     public ArrayList<Collaborator> getAuthors() {
         return authors;
     }
-    public String writeContents() {
+    public String writeConferenceName() {
+        return "\nConferencia: " + this.getConferenceName();
+    }
+    public String writeAssociatedProject() {
         String toPrint;
-        toPrint = "Titulo: " + this.getTitle();
-        toPrint = toPrint + "\nConferencia: " + this.getConferenceName();
-        toPrint = toPrint + "\nAno de publicacao: " + this.getYearOfPublication();
-        toPrint = toPrint + "\nProjeto de pesquisa associado: ";
+        toPrint = "\nProjeto de pesquisa associado: ";
         if(this.getAssociatedProject() != null) {
             toPrint = toPrint + this.getAssociatedProject().getTitle();
         }
-        toPrint = toPrint + "\nAutores: ";
+        return toPrint;
+    }
+    public String writeAuthors() {
+        String toPrint;
+        toPrint = "\nAutores: ";
         for(int i = 0; i < this.getAuthors().size(); i++){
             if(i == 0) {
                 toPrint = toPrint + this.getAuthors().get(i).getName();
@@ -56,8 +60,10 @@ public class Publication extends AcademicProduction {
                 toPrint = toPrint + "\n         " + this.getAuthors().get(i).getName();
             }
         }
-        
         return toPrint;
+    }
+    public String writeContents() {
+        return writeTitle() + writeConferenceName() + writeYearOfPublication() + writeAssociatedProject() + writeAuthors();
     }
     /* Uma publicação deve ter titulo, nome da conferência onde foi publicada, ano de publicação e projeto
        de pesquisa associado (se houver) */
