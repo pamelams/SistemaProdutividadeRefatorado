@@ -7,10 +7,8 @@ public class Collaborator {
     private ArrayList<Project> history = new ArrayList<Project>(); 
     private ArrayList<AcademicProduction> academicProduction = new ArrayList<AcademicProduction>();
 
-    public Collaborator(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public Collaborator() {
+    
     }
     public Collaborator(String name, String email, String password, ArrayList<Project> history, ArrayList<AcademicProduction> academicProduction) {
         this.name = name;
