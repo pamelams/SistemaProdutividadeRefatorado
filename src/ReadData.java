@@ -45,6 +45,24 @@ public class ReadData {
         } while(!done);
         return num;
     }
+    public static int readInt() {
+        int num;
+        boolean done;
+        do {
+            try {
+                System.out.print("\n> ");
+                num = read.nextInt();
+                read.nextLine();
+                done = true;
+                return num;
+            } catch(Exception e) {
+                System.out.println("\nEntrada invalida! Tente novamente: ");
+                read.nextLine();
+                done = false;
+            }
+        } while(!done);
+        return -1;
+    }
     public static LocalDate readDate() {
         LocalDate date;
         int day, month, year;
