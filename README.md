@@ -24,6 +24,10 @@ A classe [Menu](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/
 
 O pré-processamento da string a ser mostrada ao printar o objeto foi retirado do método "toString" e colocado em novos métodos que serão invocados pelo método "writeContents", que por sua vez retornará a string pronta para o "toString". Isso foi feito nas classes [Collaborator](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Collaborator.java#L116), [Project](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Project.java#L266), [Guidance](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Guidance.java#L29) e [Publication](https://github.com/pamelams/SistemaProdutividadeRefatorado/blob/80105b09d97226f583924199b06ca41041eb0ade/src/Publication.java#L65).
 
+## UML
+
+![SistemaProdutividade-UML](https://user-images.githubusercontent.com/32972537/105046582-08664f80-5a48-11eb-8407-6bd6cbad622a.png)
+
 ## Funcionalidades do sistema:
 
 ### Login como administrador:
